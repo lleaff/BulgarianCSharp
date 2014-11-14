@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace FundamentalsOfCExercisesVariablesChapter
 {
+	//Random comment
 	public class ConsoleExercises {
 
 		public ConsoleExercises ()
