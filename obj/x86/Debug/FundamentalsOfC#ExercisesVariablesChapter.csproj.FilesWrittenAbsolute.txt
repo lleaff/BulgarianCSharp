@@ -1,0 +1,5 @@
+/Users/lothaire/Projects/FundamentalsOfC#ExercisesVariablesChapter/FundamentalsOfC#ExercisesVariablesChapter/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/Users/lothaire/Projects/FundamentalsOfC#ExercisesVariablesChapter/FundamentalsOfC#ExercisesVariablesChapter/bin/Debug/FundamentalsOfC#ExercisesVariablesChapter.exe.mdb
+/Users/lothaire/Projects/FundamentalsOfC#ExercisesVariablesChapter/FundamentalsOfC#ExercisesVariablesChapter/bin/Debug/FundamentalsOfC#ExercisesVariablesChapter.exe
+/Users/lothaire/Projects/FundamentalsOfC#ExercisesVariablesChapter/FundamentalsOfC#ExercisesVariablesChapter/obj/x86/Debug/FundamentalsOfC#ExercisesVariablesChapter.exe
+/Users/lothaire/Projects/FundamentalsOfC#ExercisesVariablesChapter/FundamentalsOfC#ExercisesVariablesChapter/obj/x86/Debug/FundamentalsOfC#ExercisesVariablesChapter.exe.mdb
