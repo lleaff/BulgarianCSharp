@@ -1,7 +1,7 @@
 ﻿using System;
 using ExtensionMethods;
 
-namespace FundamentalsOfCExercisesVariablesChapter
+namespace FundamentalsOfProgrammingWithCSharp
 {
 	public static class TestScratchpad
 	{

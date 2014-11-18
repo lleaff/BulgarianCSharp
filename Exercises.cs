@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FundamentalsOfCExercisesVariablesChapter
+namespace FundamentalsOfProgrammingWithCSharp
 {
 	class Exercises
 	{
@@ -12,7 +12,9 @@ namespace FundamentalsOfCExercisesVariablesChapter
 				"1. Variables\n" +
 				"2. MIT Introduction to algorithms\n" +
 				"3. Console\n" +
-				"4. Loop\n");
+				"4. Loop\n" +
+				"5. Arrays\n" +
+				"6. Numeral Systems\n");
 
 				string selector = Console.ReadLine ();
 
@@ -36,6 +38,10 @@ namespace FundamentalsOfCExercisesVariablesChapter
 
 				case "4":
 					LoopsExercises.DoExercises ();
+					break;
+
+					case "5":
+					ArraysExercises.DoExercises();
 					break;
 
 				default:
@@ -98,8 +104,37 @@ namespace FundamentalsOfCExercisesVariablesChapter
 			}
 			return result;
 		}
-			
 
+/// <summary>
+/// Reads a string of comma-separated integers and returns them in an array.
+/// </summary>
+/// <param name="limit">Array max size</param>
+/// <returns></returns>
+		static public int[] ReadIntArrayCommaSeparated(int limit = Int32.MaxValue)
+		{
+			int[] nums;
+			for (bool done = false; !done; )
+			{
+				string input = Console.ReadLine();
+				string[] inputs = input.Split(new string[] { ",", ", ", " ,", " " }, StringSplitOptions.RemoveEmptyEntries);
+				nums = new int[inputs.Length];
+				for (int i = 0; i < inputs.Length && i < limit; i++)
+				{
+					if (!Int32.TryParse(inputs[i], out nums[i]))
+					{
+						done = false;
+						Console.WriteLine("Please input integers separated by commas like this:\n63, 43, 0, 54, 205, 4234, -324, 459");
+						break;
+					}
+				done = true;
+				}
+				if (done)
+				{
+					return nums;
+				}
+			}
+			return new int[0];		
+		}
 
 	}
 }

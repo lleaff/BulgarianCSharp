@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FundamentalsOfCExercisesVariablesChapter
+namespace FundamentalsOfProgrammingWithCSharp
 {
 	class VariableExercises
 	{
