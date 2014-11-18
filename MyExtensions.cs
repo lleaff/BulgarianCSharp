@@ -92,6 +92,12 @@ namespace ExtensionMethods
 			}
 		}
 
+		public static void Fill<T>(this IList<T> array, T value) {
+			for (int i = array.Count - 1; i >= 0; i--) {
+				array [i] = value;
+			}
+		}
+
 		public static bool IsEqualTo<T>(this IList<T> array1, IList<T> array2)
 		{
 			if (array1.Count != array2.Count)
@@ -108,6 +114,17 @@ namespace ExtensionMethods
 			return false;
 		}
 
+		public static int Biggest<T>(this IList<T> array) where T : IComparable { //TODO
+			T biggestValue = array [0];
+			int biggestValueIndex = 0;
+			for (int i = 0; i < array.Count; i++) {
+				if ((array [i].CompareTo (biggestValue)) > 1) {
+					biggestValue = array [i];
+					biggestValueIndex = i;
+				}
+			}
+			return biggestValueIndex;
+		}
 
 		#endregion Arrays
 	}
