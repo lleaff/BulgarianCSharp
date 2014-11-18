@@ -135,27 +135,40 @@ namespace FundamentalsOfProgrammingWithCSharp
 					int[] nums = Exercises.ReadIntArrayCommaSeparated();
 					int[] seriesLength = new int[nums.Length];
 					seriesLength.Fill(1);
-					for (int i = 1; i < nums.Length; i++) {
-						if (nums[i] == nums[i - 1]) {
+					for (int i = 1; i < nums.Length; i++)
+					{
+						if (nums[i] == nums[i - 1])
+						{
 							seriesLength[i] = seriesLength[i - 1] + 1;
 						}
 					}
-					int iB = nums.Biggest();
-					Console.WriteLine("DEBUG: " + nums.Biggest());//DEBUG
-					int[] series = new int[iB];
+					int iB = seriesLength.Biggest();
+					int[] series = new int[seriesLength[iB]];
 					series.Fill(nums[iB]);
 					Console.WriteLine("The biggest series of consecutive integers in this array is :");
-					series.Print(false,", ");
+					series.Print(false, ", ");
+					Console.Write(Environment.NewLine);
 				}
 
 				#endregion Exercise 4
 
+				#region Exercise 5
+
+				if (exercise == "5")
+				{
+					
+				}
+
+				#endregion Exercise 5
+
 				#region Test
+
 				if (exercise == "test")
 				{
-					int[] testArray = new int[] {1, 2, 3, 5, 3, 2, 2, 0, 1, 6};
-					Console.WriteLine(testArray.Biggest());
+					int[] testArray = new int[] { 100, 2, 3, 5, 3, 2, 2, 0, 1, -5 };
+					Console.WriteLine(testArray.Biggest() + " ... " + testArray[testArray.Biggest()]);
 				}
+
 				#endregion Test
 			}
 		}

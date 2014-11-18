@@ -118,7 +118,7 @@ namespace ExtensionMethods
 			T biggestValue = array [0];
 			int biggestValueIndex = 0;
 			for (int i = 0; i < array.Count; i++) {
-				if ((array [i].CompareTo (biggestValue)) > 1) {
+				if ((array [i].CompareTo (biggestValue)) > 0) {
 					biggestValue = array [i];
 					biggestValueIndex = i;
 				}
