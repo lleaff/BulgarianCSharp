@@ -219,6 +219,36 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				#endregion Exercise 6
 
+				#region Exercise 7
+
+				if (exercise == "7")
+				{
+					Console.WriteLine("Input integers separated by commas to put into an array");
+					int[] nums = Exercises.ReadIntArrayCommaSeparated();
+					Console.WriteLine("Input a number K (K < {0}), the program will find the series of integers of length K with the maximum sum.", nums.Length);
+					int k = Exercises.ReadInt32(0, nums.Length);
+					int[] sums = new int[nums.Length];
+					for (int i = 0; i < nums.Length - k; i++) 
+					{
+						int sum = nums[i];
+						for (int s = 1; s <= k; s++) 
+						{
+							sum += nums[s];
+						}
+						sums[i] = sum;
+					}
+					int biggestSumStartIndex = sums.Biggest();
+					int[] series = new int[k];
+					for (int i = biggestSumStartIndex, c = 0; i < biggestSumStartIndex + k; i++, c++) {
+						series[c] = nums[i];
+					}
+					Console.WriteLine("The series of {0} consecutive integers with the biggest sum is:", k);
+					series.Print(false, ", ");
+					Console.Write(Environment.NewLine);
+				}
+
+				#endregion Exercise 7
+
 				#region Test
 
 				if (exercise == "test")
