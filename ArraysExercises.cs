@@ -188,6 +188,33 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				if (exercise == "6")
 				{
+					Console.WriteLine("Input integers separated by commas to put into an array");
+					int[] nums = Exercises.ReadIntArrayCommaSeparated();
+					int[] numsMarked = new int[nums.Length];
+					for (int i = 0; i < nums.Length - 1; i++)
+					{
+						if (numsMarked[i] == 0)
+						{
+							for (int c = i + 1, lastGood = c - 1; c < nums.Length - i; c++)
+							{
+								if (numsMarked[c] == 0 && nums[c] == nums[lastGood] + 1)
+								{
+									numsMarked[c] = numsMarked[lastGood] + 1;
+									lastGood = c;
+								}
+							}
+						}
+					}
+					int biggestSeriesIndex = numsMarked.Biggest();
+					int[] series = new int[numsMarked[biggestSeriesIndex] + 1];
+					Console.WriteLine("numsMarked[biggestSeriesIndex] = " + numsMarked[biggestSeriesIndex] + "   biggestSeriesIndex = " + biggestSeriesIndex);//DEBUG
+					for (int i = series.Length - 1, n = nums[biggestSeriesIndex]; i >= 0; i--, n--)
+					{
+						series[i] = n;
+					}
+					Console.WriteLine("The biggest series of (not necessary consecutive) increasing integers is :");
+					series.Print(false, ", ");
+					Console.Write(Environment.NewLine);
 				}
 
 				#endregion Exercise 6
