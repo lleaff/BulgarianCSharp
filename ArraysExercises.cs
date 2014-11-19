@@ -131,10 +131,11 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				if (exercise == "4")
 				{
-					Console.WriteLine("Input integers to put in a array, separated by commas");
+					Console.WriteLine("Input integers to put in an array, separated by commas");
 					int[] nums = Exercises.ReadIntArrayCommaSeparated();
 					int[] seriesLength = new int[nums.Length];
 					seriesLength.Fill(1);
+					//Series check
 					for (int i = 1; i < nums.Length; i++)
 					{
 						if (nums[i] == nums[i - 1])
@@ -142,6 +143,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 							seriesLength[i] = seriesLength[i - 1] + 1;
 						}
 					}
+
 					int iB = seriesLength.Biggest();
 					int[] series = new int[seriesLength[iB]];
 					series.Fill(nums[iB]);
@@ -156,10 +158,39 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				if (exercise == "5")
 				{
-					
+					Console.WriteLine("Input integers to put in an array, separated by commas");
+					int[] nums = Exercises.ReadIntArrayCommaSeparated();
+					int[] seriesLength = new int[nums.Length];
+					seriesLength.Fill(1);
+					for (int i = 1; i < nums.Length; i++)
+					{
+						if (nums[i] == nums[i - 1] + 1)
+						{
+							seriesLength[i] = seriesLength[i - 1] + 1;
+						}
+					}
+					int biggestSeriesEndIndex = seriesLength.Biggest();
+					int[] series = new int[seriesLength[biggestSeriesEndIndex]];
+					//Let's fill the series array with values copied from the original one
+					for (int i = 0; i < seriesLength[biggestSeriesEndIndex]; i++)
+					{
+						series[i] = nums[biggestSeriesEndIndex - seriesLength[biggestSeriesEndIndex] + i + 1];
+					}
+
+					Console.WriteLine("The biggest series of consecutively increasing integers is :");
+					series.Print(false, ", ");
+					Console.Write(Environment.NewLine);
 				}
 
 				#endregion Exercise 5
+
+				#region Exercise 6
+
+				if (exercise == "6")
+				{
+				}
+
+				#endregion Exercise 6
 
 				#region Test
 
