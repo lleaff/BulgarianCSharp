@@ -1,10 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ExtensionMethods
 {
+	//for the Sort<T>() method
+	public enum SortOption { Selection, Ascending, Descending };
+
 	public static class MyExtensions
 	{
+
+
+		public static void Swap<T>(this T val1, T val2)
+		{
+			T bufferVal = val2;
+			val2 = val1;
+			val1 = bufferVal;
+		}
+
 		/// <summary>
 		/// Returns whether a string goes before another alphabetically or is equal to.
 		/// Doesn't take case into account.
@@ -96,6 +109,41 @@ namespace ExtensionMethods
 			for (int i = array.Count - 1; i >= 0; i--) {
 				array [i] = value;
 			}
+		}
+  
+
+		public static IList<T> Sort<T>(this IList<T> array, SortOption algorithm = SortOption.Selection, SortOption order = SortOption.Ascending) where T : IComparable {
+		if (array == null)
+			{
+				return null;
+			}
+			if (algorithm == SortOption.Selection)
+			{
+				for (int i = 0, j = 0, smallestValueIndex = 0; i < array.Count- 2; i++, j = i, smallestValueIndex = i)
+				{
+					T smallestValue = order == SortOption.Ascending ? array.Max() : array.Min();
+					for (; j < array.Count; j++)
+					{
+						if ((order == SortOption.Ascending && array[j].CompareTo(smallestValue) < 0) || (order == SortOption.Descending && array[j].CompareTo(smallestValue) > 0))
+						{
+							smallestValue = array[j];
+							smallestValueIndex = j;
+						}
+					}
+					T swapBuffer = array[i];
+					array[i] = array[smallestValueIndex];
+					array[smallestValueIndex] = swapBuffer;
+				}
+				return array;
+			}
+			return null;
+		}
+
+		public static T[] Sort<T>(this T[] array, SortOption algorithm = SortOption.Selection, SortOption order = SortOption.Ascending) where T : IComparable
+		{
+			IList<T> result = ((IList<T>)array).Sort(algorithm, order);
+			return (T[])result;
+			
 		}
 
 		public static bool IsEqualTo<T>(this IList<T> array1, IList<T> array2)

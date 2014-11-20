@@ -14,6 +14,9 @@ namespace FundamentalsOfProgrammingWithCSharp
 				Console.WriteLine("Exercise n°?");
 				exercise = Console.ReadLine();
 
+				int[] testIntArray1 = { -777, 3, 100, 56, -4, 91, 56, -50, 9999, 450, 0, 20 }; //Length = 9
+				int[] testIntArray2 = { 40, 20 }; //Length = 2
+
 				#region Exercise 1
 
 				if (exercise == "1")
@@ -228,10 +231,10 @@ namespace FundamentalsOfProgrammingWithCSharp
 					Console.WriteLine("Input a number K (K < {0}), the program will find the series of integers of length K with the maximum sum.", nums.Length);
 					int k = Exercises.ReadInt32(0, nums.Length);
 					int[] sums = new int[nums.Length];
-					for (int i = 0; i < nums.Length - k; i++) 
+					for (int i = 0; i < nums.Length - k; i++)
 					{
 						int sum = nums[i];
-						for (int s = 1; s <= k; s++) 
+						for (int s = 1; s <= k; s++)
 						{
 							sum += nums[s];
 						}
@@ -239,7 +242,8 @@ namespace FundamentalsOfProgrammingWithCSharp
 					}
 					int biggestSumStartIndex = sums.Biggest();
 					int[] series = new int[k];
-					for (int i = biggestSumStartIndex, c = 0; i < biggestSumStartIndex + k; i++, c++) {
+					for (int i = biggestSumStartIndex, c = 0; i < biggestSumStartIndex + k; i++, c++)
+					{
 						series[c] = nums[i];
 					}
 					Console.WriteLine("The series of {0} consecutive integers with the biggest sum is:", k);
@@ -248,6 +252,53 @@ namespace FundamentalsOfProgrammingWithCSharp
 				}
 
 				#endregion Exercise 7
+
+				#region Exercise 8
+
+				if (exercise == "8")
+				{
+					for (string input = ""; input != "q"; )
+					{
+						Console.WriteLine("Select an array to sort using a selection sort algorithm: (\"q\" to quit)");
+						Console.Write("1. {");
+						testIntArray1.Print(false, ", ");
+						Console.Write("}" + Environment.NewLine);
+						Console.Write("2. {");
+						testIntArray2.Print(false, ", ");
+						Console.Write("}" + Environment.NewLine);
+						Console.WriteLine("3. Input array");
+						int[] array;
+						input = Console.ReadLine();
+						switch (input)
+						{
+							case "1":
+								array = testIntArray1.Sort(SortOption.Selection);
+								break;
+
+							case "2":
+								array = testIntArray2.Sort(SortOption.Selection);
+								break;
+
+							case "3":
+								Console.WriteLine("Input integers separated by commas:");
+								array = Exercises.ReadIntArrayCommaSeparated();
+								array.Sort(SortOption.Selection);
+								break;
+
+							default:
+								array = new int[] { 0 };
+								break;
+						}
+						if (input != "q")
+						{
+							Console.Write("Sorted array: {");
+							array.Print(false, ", ");
+							Console.Write("}" + Environment.NewLine);
+						}
+					}
+				}
+
+				#endregion Exercise 8
 
 				#region Test
 
