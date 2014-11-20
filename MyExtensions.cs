@@ -9,8 +9,6 @@ namespace ExtensionMethods
 
 	public static class MyExtensions
 	{
-
-
 		public static void Swap<T>(this T val1, T val2)
 		{
 			T bufferVal = val2;
@@ -35,7 +33,7 @@ namespace ExtensionMethods
 				if (arrays[0][i] > arrays[1][i])
 					return false;
 				else if (arrays[0][i] < arrays[1][i])
-					return true; 
+					return true;
 			}
 			return true;
 		}
@@ -105,21 +103,23 @@ namespace ExtensionMethods
 			}
 		}
 
-		public static void Fill<T>(this IList<T> array, T value) {
-			for (int i = array.Count - 1; i >= 0; i--) {
-				array [i] = value;
+		public static void Fill<T>(this IList<T> array, T value)
+		{
+			for (int i = array.Count - 1; i >= 0; i--)
+			{
+				array[i] = value;
 			}
 		}
-  
 
-		public static IList<T> Sort<T>(this IList<T> array, SortOption algorithm = SortOption.Selection, SortOption order = SortOption.Ascending) where T : IComparable {
-		if (array == null)
+		public static IList<T> Sort<T>(this IList<T> array, SortOption algorithm = SortOption.Selection, SortOption order = SortOption.Ascending) where T : IComparable
+		{
+			if (array == null)
 			{
 				return null;
 			}
 			if (algorithm == SortOption.Selection)
 			{
-				for (int i = 0, j = 0, smallestValueIndex = 0; i < array.Count- 2; i++, j = i, smallestValueIndex = i)
+				for (int i = 0, j = 0, smallestValueIndex = 0; i < array.Count - 2; i++, j = i, smallestValueIndex = i)
 				{
 					T smallestValue = order == SortOption.Ascending ? array.Max() : array.Min();
 					for (; j < array.Count; j++)
@@ -141,9 +141,7 @@ namespace ExtensionMethods
 
 		public static T[] Sort<T>(this T[] array, SortOption algorithm = SortOption.Selection, SortOption order = SortOption.Ascending) where T : IComparable
 		{
-			IList<T> result = ((IList<T>)array).Sort(algorithm, order);
-			return (T[])result;
-			
+			return (T[])((IList<T>)array).Sort(algorithm, order);
 		}
 
 		public static bool IsEqualTo<T>(this IList<T> array1, IList<T> array2)
@@ -162,16 +160,75 @@ namespace ExtensionMethods
 			return false;
 		}
 
-		public static int Biggest<T>(this IList<T> array) where T : IComparable { //TODO
-			T biggestValue = array [0];
+		public static int Biggest<T>(this IList<T> array, int start = 0, int end = Int32.MaxValue) where T : IComparable
+		{
+			T biggestValue = array[0];
 			int biggestValueIndex = 0;
-			for (int i = 0; i < array.Count; i++) {
-				if ((array [i].CompareTo (biggestValue)) > 0) {
-					biggestValue = array [i];
+			for (int i = start; i < array.Count && i < end; i++)
+			{
+				if ((array[i].CompareTo(biggestValue)) > 0)
+				{
+					biggestValue = array[i];
 					biggestValueIndex = i;
 				}
 			}
 			return biggestValueIndex;
+		}
+
+		public static IList<decimal> MaxSumSubsequence(this IList<decimal> array)
+		{
+			if (array == null)
+			{
+				return null;
+			}
+			decimal maxSum = array.Min();
+			int maxSumStart = 0;
+			int maxSumEnd = 0;
+			decimal sum = 0;
+			for (int i = 0, j = 0; i < array.Count; i++, j = i, sum = 0)
+			{
+				for (; j < array.Count; j++)
+				{
+					sum += array[j];
+					if (sum > maxSum)
+					{
+						maxSum = sum;
+						maxSumStart = i;
+						maxSumEnd = j;
+					}
+					else if (sum < 0)
+					{
+						i = Math.Min(j, array.Count - 1);
+						break;
+					}
+				}
+			}
+			IList<decimal> subsequence = new List<decimal>();
+			//fill return list with values from input list
+			for (int j = maxSumStart; j <= maxSumEnd; j++)
+			{
+				subsequence.Add(array[j]);
+			}
+			return (IList<decimal>)subsequence;
+		}
+
+		public static decimal[] MaxSumSubsequence(this decimal[] array)
+		{
+			return array.ToList<decimal>().MaxSumSubsequence().ToArray<decimal>();
+		}
+
+		public static int[] MaxSumSubsequence(this int[] array)
+		{
+			decimal[] convertedArray = Array.ConvertAll(array, val => (decimal)val);
+			convertedArray = convertedArray.ToList<decimal>().MaxSumSubsequence().ToArray<decimal>();
+			return Array.ConvertAll(convertedArray, val => (int)val);
+		}
+
+		public static double[] MaxSumSubsequence(this double[] array)
+		{
+			decimal[] convertedArray = Array.ConvertAll(array, val => (decimal)val);
+			convertedArray = convertedArray.ToList<decimal>().MaxSumSubsequence().ToArray<decimal>();
+			return Array.ConvertAll(convertedArray, val => (double)val);
 		}
 
 		#endregion Arrays

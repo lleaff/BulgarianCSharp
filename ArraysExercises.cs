@@ -14,8 +14,9 @@ namespace FundamentalsOfProgrammingWithCSharp
 				Console.WriteLine("Exercise n°?");
 				exercise = Console.ReadLine();
 
-				int[] testIntArray1 = { -777, 3, 100, 56, -4, 91, 56, -50, 9999, 450, 0, 20 }; //Length = 9
-				int[] testIntArray2 = { 40, 20 }; //Length = 2
+				int[] testIntArray1 = { -777, 3, 100, 56, -4, 91, 56, -50, 9999, 450, 0, 20 }; //Length = 12
+				int[] testIntArray2 = { 40, 20, -100, 10, 90, -5 };
+				int[] testIntArray3 = { -3234, 456, -14, 3205, -324, 12, -432, 8 }; //Length = 8
 
 				#region Exercise 1
 
@@ -259,7 +260,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 				{
 					for (string input = ""; input != "q"; )
 					{
-						Console.WriteLine("Select an array to sort using a selection sort algorithm: (\"q\" to quit)");
+						Console.WriteLine("Select an array to sort using a \"selection\" sort algorithm: (\"q\" to quit)");
 						Console.Write("1. {");
 						testIntArray1.Print(false, ", ");
 						Console.Write("}" + Environment.NewLine);
@@ -299,6 +300,61 @@ namespace FundamentalsOfProgrammingWithCSharp
 				}
 
 				#endregion Exercise 8
+
+				#region Exercise 9
+
+				if (exercise == "9")
+				{
+					for (string input = ""; input != "q"; )
+					{
+						Console.WriteLine("Select an array in which to find the subsequence of maximal sum:");
+						Console.Write("1. {");
+						testIntArray1.Print(false, ", ");
+						Console.Write("}" + Environment.NewLine);
+						Console.Write("2. {");
+						testIntArray2.Print(false, ", ");
+						Console.Write("}" + Environment.NewLine);
+						Console.WriteLine("3. Input array");
+						int[] array;
+						input = Console.ReadLine();
+						switch (input)
+						{
+							case "1":
+								array = testIntArray1.MaxSumSubsequence();
+								break;
+
+							case "2":
+								array = testIntArray2.MaxSumSubsequence();
+								break;
+
+							case "3":
+								Console.WriteLine("Input integers separated by commas:");
+								array = Exercises.ReadIntArrayCommaSeparated();
+								array = array.MaxSumSubsequence();
+								break;
+
+							default:
+								array = new int[] { 0 };
+								break;
+						}
+						if (input != "q")
+						{
+							Console.Write("Maximal sum subsequence: {");
+							array.Print(false, ", ");
+							Console.Write("}" + Environment.NewLine);
+						}
+					}
+				}
+
+				#endregion Exercise 9
+
+				#region Exercise 10
+
+				if (exercise == "10")
+				{
+				}
+
+				#endregion Exercise 10
 
 				#region Test
 
