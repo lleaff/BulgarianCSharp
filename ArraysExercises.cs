@@ -11,7 +11,13 @@ namespace FundamentalsOfProgrammingWithCSharp
 		new int[] { -777, 3, 100, 56, -4, 100, 56, -50, 9999, 100, 0, 20 },
 		new int[] { 40, 20, -100, 10, 90, -5 },
 		new int[]{ -3234, 456, -14, 3205, -324, 12, -432, 8 },
-		new int[] { 44 }};
+		new int[] { 44 },
+		};
+
+		private static int[,] testIntMatrice1 = new int[,] {
+		{35, 560, 3459, 0, 53},
+		{64, 35, 54, 456, 99999},
+		{-1, 435, -20, 4533, 43}};
 
 		public static void DoExercises()
 		{
@@ -26,9 +32,11 @@ namespace FundamentalsOfProgrammingWithCSharp
 				if (exercise == "1")
 				{
 					int[] myArray = new int[20];
+
 					for (int i = 0; i < myArray.Length; i++)
 					{
 						myArray[i] = i * 5;
+
 						Console.Write("{0}{1}", myArray[i], (i < myArray.Length - 1) ? ", " : ("." + Environment.NewLine));
 					}
 				}
@@ -40,9 +48,13 @@ namespace FundamentalsOfProgrammingWithCSharp
 				if (exercise == "2")
 				{
 					double[][] arrays = new double[2][];
+
 					List<double>[] bufferLists = new List<double>[2];
+
 					bufferLists[0] = new List<double>();
+
 					bufferLists[1] = new List<double>();
+
 					Console.WriteLine("Input numbers to be put into an array. When you're finished press {Enter} to fill a second array");
 					for (int c = 0; c <= 1; )
 					{
@@ -370,19 +382,23 @@ namespace FundamentalsOfProgrammingWithCSharp
 							case "1":
 								mostFrequentValue = testIntArrays[0].MostFrequentValue(out frequency);
 								break;
-								
+
 							case "2":
 								mostFrequentValue = testIntArrays[1].MostFrequentValue(out frequency);
 								break;
+
 							case "3":
 								mostFrequentValue = testIntArrays[2].MostFrequentValue(out frequency);
 								break;
+
 							case "4":
 								mostFrequentValue = testIntArrays[3].MostFrequentValue(out frequency);
 								break;
+
 							case "5":
 								mostFrequentValue = Exercises.ReadIntArrayCommaSeparated().MostFrequentValue(out frequency);
 								break;
+
 							default:
 								mostFrequentValue = 0;
 								break;
@@ -393,12 +409,27 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				#endregion Exercise 10
 
+				#region Exercise 11
+
+				if (exercise == "11")
+				{
+				}
+
+				#endregion Exercise 11
+
 				#region Test
 
 				if (exercise == "test")
 				{
-					int[] testArray = new int[] { 100, 2, 3, 5, 3, 2, 2, 0, 1, -5 };
-					Console.WriteLine(testArray.Biggest() + " ... " + testArray[testArray.Biggest()]);
+					for (int y = 0; y < testIntMatrice1.GetLength(0);y++)
+					{
+						Console.Write("{");
+						for (int x = 0; x < testIntMatrice1.GetLength(1); x++)
+						{
+							Console.Write(" " + testIntMatrice1[y, x] + (x == testIntMatrice1.GetLength(0) - 1 ? "," : " "));
+						}
+						Console.WriteLine("}");
+					}
 				}
 
 				#endregion Test
