@@ -413,6 +413,52 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				if (exercise == "11")
 				{
+					for (string input = ""; input != "quit"; )
+					{
+						Console.WriteLine("Input an integer number:");
+						int sum = Exercises.ReadInt32();
+						Console.WriteLine("Select an array in which to find a series of consecutive integers with a sum of {0}:", sum);
+						ArraysExercises.PrintArraySelection();
+						int[] neighbors;
+						Console.Write("> ");
+						input = Console.ReadLine();
+						switch (input)
+						{
+							case "1":
+								neighbors = testIntArrays[0].ConsecutiveWithSum(sum);
+								break;
+
+							case "2":
+								neighbors = testIntArrays[1].ConsecutiveWithSum(sum);
+								break;
+
+							case "3":
+								neighbors = testIntArrays[2].ConsecutiveWithSum(sum);
+								break;
+
+							case "4":
+								neighbors = testIntArrays[3].ConsecutiveWithSum(sum);
+								break;
+
+							case "5":
+								neighbors = Exercises.ReadIntArrayCommaSeparated().ConsecutiveWithSum(sum);
+								break;
+
+							default:
+								neighbors = new int[0];
+								break;
+						}
+						if (neighbors.Length == 0)
+						{
+							Console.WriteLine("The array you chose doesn't contain any consecutive numbers with a sum of {0}", sum);
+						}
+						else
+						{
+							Console.Write("The series of numbers{0}{{", Environment.NewLine);
+							neighbors.Print(false, ", ");
+							Console.WriteLine("}}{1}has a sum of {0}.", sum, Environment.NewLine);
+						}
+					}
 				}
 
 				#endregion Exercise 11
@@ -421,7 +467,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				if (exercise == "test")
 				{
-					for (int y = 0; y < testIntMatrice1.GetLength(0);y++)
+					for (int y = 0; y < testIntMatrice1.GetLength(0); y++)
 					{
 						Console.Write("{");
 						for (int x = 0; x < testIntMatrice1.GetLength(1); x++)

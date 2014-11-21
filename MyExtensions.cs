@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiscUtil;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -228,6 +229,41 @@ namespace ExtensionMethods
 		{
 			int buffer;
 			return array.MostFrequentValue(out buffer, position);
+		}
+
+		public static T[] ConsecutiveWithSum<T>(this T[] array, T sum) where T : IComparable
+		{
+			int indexStart = 0, indexEnd = 0;
+			bool success = false; ;
+			for (int i = 0, j = 0; i < array.Length; i++, j = i)
+			{
+				if (success)
+				{
+					break;
+				}
+				T currentSum = default(T);
+				for (; j < array.Length; j++)
+				{
+					currentSum = Operator.Add(currentSum, array[j]);
+					if (currentSum.CompareTo(sum) == 0)
+					{
+						indexStart = i;
+						indexEnd = j;
+						success = true;
+						break;
+					}
+				}
+			}
+			if (!success)
+			{
+				return new T[0];
+			}
+			T[] series = new T[indexEnd - indexStart + 1];
+			for (int i = 0, j = indexStart; j <= indexEnd; i++, j++)
+			{
+				series[i] = array[j];
+			}
+			return series; ;
 		}
 
 		public static IList<decimal> MaxSumSubsequence(this IList<decimal> array)

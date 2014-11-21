@@ -34,6 +34,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArraysExercises.cs" />
+    <Compile Include="GenericMath.cs" />
+    <Compile Include="Linq\ExpressionUtil.cs" />
+    <Compile Include="NullOp.cs" />
+    <Compile Include="Operator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VariableExercises.cs" />
     <Compile Include="Exercises.cs" />
@@ -43,5 +47,6 @@
     <Compile Include="MyExtensions.cs" />
     <Compile Include="TestScratchpad.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
