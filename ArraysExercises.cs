@@ -8,7 +8,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 	{
 		//Test variables
 		private static int[][] testIntArrays = {
-		new int[] { -777, 3, 100, 56, -4, 91, 56, -50, 9999, 100, 0, 20 },
+		new int[] { -777, 3, 100, 56, -4, 100, 56, -50, 9999, 100, 0, 20 },
 		new int[] { 40, 20, -100, 10, 90, -5 },
 		new int[]{ -3234, 456, -14, 3205, -324, 12, -432, 8 },
 		new int[] { 44 }};

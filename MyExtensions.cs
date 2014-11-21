@@ -215,6 +215,11 @@ namespace ExtensionMethods
 			{
 				result = array[frequency.Biggest()];
 				frequencyValue = frequency[frequency.Biggest()];
+
+				if (position > 1)
+				{
+					frequency[frequency.Biggest()] = 0;
+				}
 			}
 			return result;
 		}
@@ -222,7 +227,7 @@ namespace ExtensionMethods
 		public static T MostFrequentValue<T>(this IList<T> array, int position = 1) where T : IComparable
 		{
 			int buffer;
-			return array.MostFrequentValue(out buffer);
+			return array.MostFrequentValue(out buffer, position);
 		}
 
 		public static IList<decimal> MaxSumSubsequence(this IList<decimal> array)
