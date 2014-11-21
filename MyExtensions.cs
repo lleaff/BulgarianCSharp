@@ -160,6 +160,14 @@ namespace ExtensionMethods
 			return false;
 		}
 
+		/// <summary>
+		/// Returns the index of the biggest value in the array.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="array"></param>
+		/// <param name="start">From what index to start scanning</param>
+		/// <param name="end">At what index to stop scanning</param>
+		/// <returns></returns>
 		public static int Biggest<T>(this IList<T> array, int start = 0, int end = Int32.MaxValue) where T : IComparable
 		{
 			T biggestValue = array[0];
@@ -173,6 +181,48 @@ namespace ExtensionMethods
 				}
 			}
 			return biggestValueIndex;
+		}
+
+		/// <summary>
+		/// Finds the most frequently occuring value in an array.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="array"></param>
+		/// <param name="position">1 for most frequent value, 2 for second most frequent, ...</param>
+		/// <returns></returns>
+		public static T MostFrequentValue<T>(this IList<T> array, out int frequencyValue, int position = 1) where T : IComparable
+		{
+			frequencyValue = 0;
+			int[] frequency = new int[array.Count];
+			T[] frequencyValues = new T[array.Count];
+			for (int i = 0, j = 0; i < array.Count; i++, j = 0)
+			{
+				if (frequency[i] != 0)
+				{
+					continue;
+				}
+				for (; j < array.Count; j++)
+				{
+					if (array[i].CompareTo(array[j]) == 0 && frequency[j] == 0)
+					{
+						frequencyValues[i] = frequencyValues[j] = array[i];
+						frequency[i]++;
+					}
+				}
+			}
+			T result = array[0]; //just for initialization
+			for (int i = 0; i < position; i++)
+			{
+				result = array[frequency.Biggest()];
+				frequencyValue = frequency[frequency.Biggest()];
+			}
+			return result;
+		}
+
+		public static T MostFrequentValue<T>(this IList<T> array, int position = 1) where T : IComparable
+		{
+			int buffer;
+			return array.MostFrequentValue(out buffer);
 		}
 
 		public static IList<decimal> MaxSumSubsequence(this IList<decimal> array)

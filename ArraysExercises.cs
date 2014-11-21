@@ -6,6 +6,13 @@ namespace FundamentalsOfProgrammingWithCSharp
 {
 	internal class ArraysExercises
 	{
+		//Test variables
+		private static int[][] testIntArrays = {
+		new int[] { -777, 3, 100, 56, -4, 91, 56, -50, 9999, 100, 0, 20 },
+		new int[] { 40, 20, -100, 10, 90, -5 },
+		new int[]{ -3234, 456, -14, 3205, -324, 12, -432, 8 },
+		new int[] { 44 }}
+
 		public static void DoExercises()
 		{
 			string exercise = "";
@@ -13,10 +20,6 @@ namespace FundamentalsOfProgrammingWithCSharp
 			{
 				Console.WriteLine("Exercise n°?");
 				exercise = Console.ReadLine();
-
-				int[] testIntArray1 = { -777, 3, 100, 56, -4, 91, 56, -50, 9999, 450, 0, 20 }; //Length = 12
-				int[] testIntArray2 = { 40, 20, -100, 10, 90, -5 };
-				int[] testIntArray3 = { -3234, 456, -14, 3205, -324, 12, -432, 8 }; //Length = 8
 
 				#region Exercise 1
 
@@ -262,10 +265,10 @@ namespace FundamentalsOfProgrammingWithCSharp
 					{
 						Console.WriteLine("Select an array to sort using a \"selection\" sort algorithm: (\"q\" to quit)");
 						Console.Write("1. {");
-						testIntArray1.Print(false, ", ");
+						testIntArrays[0].Print(false, ", ");
 						Console.Write("}" + Environment.NewLine);
 						Console.Write("2. {");
-						testIntArray2.Print(false, ", ");
+						testIntArrays[1].Print(false, ", ");
 						Console.Write("}" + Environment.NewLine);
 						Console.WriteLine("3. Input array");
 						int[] array;
@@ -273,11 +276,11 @@ namespace FundamentalsOfProgrammingWithCSharp
 						switch (input)
 						{
 							case "1":
-								array = testIntArray1.Sort(SortOption.Selection);
+								array = testIntArrays[0].Sort(SortOption.Selection);
 								break;
 
 							case "2":
-								array = testIntArray2.Sort(SortOption.Selection);
+								array = testIntArrays[1].Sort(SortOption.Selection);
 								break;
 
 							case "3":
@@ -308,40 +311,42 @@ namespace FundamentalsOfProgrammingWithCSharp
 					for (string input = ""; input != "q"; )
 					{
 						Console.WriteLine("Select an array in which to find the subsequence of maximal sum:");
-						Console.Write("1. {");
-						testIntArray1.Print(false, ", ");
-						Console.Write("}" + Environment.NewLine);
-						Console.Write("2. {");
-						testIntArray2.Print(false, ", ");
-						Console.Write("}" + Environment.NewLine);
-						Console.WriteLine("3. Input array");
+						ArraysExercises.PrintArraySelection();
 						int[] array;
 						input = Console.ReadLine();
 						switch (input)
 						{
 							case "1":
-								array = testIntArray1.MaxSumSubsequence();
+								array = testIntArrays[0].MaxSumSubsequence();
 								break;
 
 							case "2":
-								array = testIntArray2.MaxSumSubsequence();
+								array = testIntArrays[1].MaxSumSubsequence();
 								break;
 
 							case "3":
+								array = testIntArrays[2].MaxSumSubsequence();
+								break;
+
+							case "4":
+								array = testIntArrays[3].MaxSumSubsequence();
+								break;
+
+							case "5":
 								Console.WriteLine("Input integers separated by commas:");
 								array = Exercises.ReadIntArrayCommaSeparated();
 								array = array.MaxSumSubsequence();
 								break;
 
 							default:
-								array = new int[] { 0 };
+								array = null;
 								break;
 						}
-						if (input != "q")
+						if (input != "q" && array != null)
 						{
 							Console.Write("Maximal sum subsequence: {");
 							array.Print(false, ", ");
-							Console.Write("}" + Environment.NewLine);
+							Console.WriteLine("}" + Environment.NewLine);
 						}
 					}
 				}
@@ -352,6 +357,38 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				if (exercise == "10")
 				{
+					for (string input = ""; input != "quit"; )
+					{
+						Console.WriteLine("Select an array in which to find the most frequently occuring value:");
+						ArraysExercises.PrintArraySelection();
+						int mostFrequentValue = Int32.MinValue;
+						int frequency = 0;
+						Console.Write("> ");
+						input = Console.ReadLine();
+						switch (input)
+						{
+							case "1":
+								mostFrequentValue = testIntArrays[0].MostFrequentValue(out frequency);
+								break;
+								
+							case "2":
+								mostFrequentValue = testIntArrays[1].MostFrequentValue(out frequency);
+								break;
+							case "3":
+								mostFrequentValue = testIntArrays[2].MostFrequentValue(out frequency);
+								break;
+							case "4":
+								mostFrequentValue = testIntArrays[3].MostFrequentValue(out frequency);
+								break;
+							case "5":
+								mostFrequentValue = Exercises.ReadIntArrayCommaSeparated().MostFrequentValue(out frequency);
+								break;
+							default:
+								mostFrequentValue = 0;
+								break;
+						}
+						Console.WriteLine("The most frequent value in the array appears {1} and is: {0}", mostFrequentValue, frequency > 1 ? frequency + " times" : "once");
+					}
 				}
 
 				#endregion Exercise 10
@@ -366,6 +403,18 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				#endregion Test
 			}
+		}
+
+		public static void PrintArraySelection(int number = Int32.MaxValue)
+		{
+			int n = 1;
+			for (; n <= number && n <= testIntArrays.Length; n++)
+			{
+				Console.Write(n + ". {");
+				testIntArrays[n - 1].Print(false, ", ");
+				Console.WriteLine("}");
+			}
+			Console.WriteLine((n) + ". Input array");
 		}
 	}
 }
