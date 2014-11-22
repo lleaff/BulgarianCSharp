@@ -320,7 +320,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				if (exercise == "9")
 				{
-					for (string input = ""; input != "q"; )
+					for (string input = ""; input != "q" && input != "quit"; )
 					{
 						Console.WriteLine("Select an array in which to find the subsequence of maximal sum:");
 						ArraysExercises.PrintArraySelection();
@@ -369,7 +369,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				if (exercise == "10")
 				{
-					for (string input = ""; input != "quit"; )
+					for (string input = ""; input != "quit" && input != "q"; )
 					{
 						Console.WriteLine("Select an array in which to find the most frequently occuring value:");
 						ArraysExercises.PrintArraySelection();
@@ -413,7 +413,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				if (exercise == "11")
 				{
-					for (string input = ""; input != "quit"; )
+					for (string input = ""; input != "quit" && input != "q"; )
 					{
 						Console.WriteLine("Input an integer number:");
 						int sum = Exercises.ReadInt32();
@@ -463,6 +463,31 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				#endregion Exercise 11
 
+				#region Exercise 12
+
+				if (exercise == "12")
+				{
+					Console.WriteLine("Input 1 or 2 numbers corresponding to the X and Y values of a square matrix");
+					int[] input = Exercises.ReadIntArrayCommaSeparated(2);
+					int[] xy = new int[2];
+					if (input.Length == 1)
+					{
+						xy[0] = xy[1] = input[0];
+					}
+					else
+					{
+						xy[0] = input[0];
+						xy[1] = input[1];
+					}
+					for (int i = 1; i <= 4; i++)
+					{
+						Console.WriteLine((PrintOrder)i + "/");
+						PrintMatrice2D(xy[0], xy[1], (PrintOrder)i);
+					}
+				}
+
+				#endregion Exercise 12
+
 				#region Test
 
 				if (exercise == "test")
@@ -479,6 +504,47 @@ namespace FundamentalsOfProgrammingWithCSharp
 				}
 
 				#endregion Test
+			}
+		}
+
+		private enum PrintOrder { a = 1, b = 2, c = 3, d = 4 };
+
+		private static void PrintMatrice2D(int x, int y, PrintOrder order)
+		{
+			if (order == PrintOrder.a)
+			{
+				for (int currY = 0, currX = 0, c = 1; currY < y; currY++, currX = 0, c = (c - (x * y)) + 1)
+				{
+					for (; currX < x; currX++, c = c + y)
+					{
+						Console.Write("{0, 3}", c);
+					}
+					Console.WriteLine();
+				}
+			}
+
+			if (order == PrintOrder.b)
+			{
+				for (int currX = 0, currY = 0, c = 1; currY < y; currY++, currX = 0, c = currY + 1)
+				{
+					for (; currX < x; currX++)
+					{
+						Console.Write("{0,3}", c);
+						if (currX % 2 == 0)
+						{
+							c += (y - currY) * 2 - 1;
+						}
+						else
+						{
+							c += currY * 2 + 1;
+						}
+					}
+					Console.WriteLine();
+				}
+			}
+
+			if (order == PrintOrder.c)
+			{
 			}
 		}
 
