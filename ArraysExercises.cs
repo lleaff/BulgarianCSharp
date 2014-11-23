@@ -545,11 +545,11 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 			if (order == PrintOrder.c)
 			{
-				int[,] matrix = new int[y, x];
-				
-				for (int c = 1, currX = 0, currY = y - 1; c <= x * y;c++)
+				int[,] matrix = new int[x, y];
+
+				for (int c = 1, currX = 0, currY = y - 1; c <= x * y; c++)
 				{
-					matrix[currY, currX] = c;
+					matrix[currX, currY] = c;
 					if (currX + 1 < x && currY + 1 < y)
 					{
 						currX++;
@@ -567,7 +567,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 				{
 					for (; currX < x; currX++)
 					{
-						Console.Write("{0, 3}", matrix[currY, currX]);
+						Console.Write("{0, 3}", matrix[currX, currY]);
 					}
 					Console.WriteLine();
 				}
@@ -575,7 +575,49 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 			if (order == PrintOrder.d)
 			{
+				int[,] matrix = new int[x, y];
+				int[] vector = new int[] { -1, 0 };
 
+				for (int currX = 0, currY = 0, c = 1, offset = 0; c <= x * y; c++, currX += vector[0], currY += vector[1])
+				{
+					matrix[currX, currY] = c;
+					if (currX == 0 + offset)
+					{
+						if (currY == 0 + offset || currY == offset - 1)
+						{
+							vector[0] = 0;
+							vector[1] = 1;
+						}
+						else if (currY == y - 1 - offset)
+						{
+							vector[0] = 1;
+							vector[1] = 0;
+						}
+					}
+					else if (currX == x - 1 - offset)
+					{
+						if (currY == y - 1 - offset)
+						{
+							vector[0] = 0;
+							vector[1] = - 1;
+						}
+						else if (currY == 0 + offset)
+						{
+							vector[0] = -1;
+							vector[1] = 0;
+							offset++;
+						}
+					}
+				}
+
+				for (int currX = 0, currY = 0; currY < y; currX = 0, currY++)
+				{
+					for (; currX < x; currX++)
+					{
+						Console.Write("{0, 3}", matrix[currX, currY]);
+					}
+					Console.WriteLine();
+				}
 			}
 		}
 
