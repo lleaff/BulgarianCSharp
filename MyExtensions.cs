@@ -323,5 +323,99 @@ namespace ExtensionMethods
 		}
 
 		#endregion Arrays & Lists
+
+		#region Arrays 2D
+
+		/// <summary>
+		/// Prints a 2D matrix
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="matrix"></param>
+		/// <param name="separator">Character to insert between the values</param>
+		/// <param name="swapXY">Swap the X and Y axis</param>
+		/// <param name="highlight">Format: {{topLeftCornerX, topLeftCornerY}{botRightCornerX, botRightCornerY}}, highlights a platform</param>
+		public static void PrintMatrix2D<T>(this T[,] matrix, string separator = ",", bool swapXY = false, int[,] highlight = null)
+		{
+			highlight = highlight ?? new int[,] { { -1, -1 }, { -1, -1 } }; //no highlight
+			//find alignment value
+			int stringLength = 1;
+			foreach (T value in matrix)
+			{
+				stringLength = value.ToString().Length > stringLength ? value.ToString().Length : stringLength;
+			}
+			T[,] matrixB;
+			int maxX = 0;
+			int maxY = 0;
+			if (swapXY)
+			{
+				T[,] switchedMatrix = new T[matrix.GetLength(1), matrix.GetLength(0)];
+				maxX = switchedMatrix.GetLength(0);
+				maxY = switchedMatrix.GetLength(1);
+				for (int y = 0; y < maxY; y++)
+				{
+					for (int x = 0; x < maxX; x++)
+					{
+						switchedMatrix[y, x] = matrix[x, y];
+					}
+				}
+				matrixB = switchedMatrix;
+			}
+			else
+			{
+				matrixB = matrix;
+				maxX = matrixB.GetLength(1);
+				maxY = matrixB.GetLength(0);
+			}
+
+			for (int y = 0; y < maxY; y++)
+			{
+				for (int x = 0; x < maxX; x++)
+				{
+					string format = String.Format("{{1}}{{0,{0}}}{{2}}", stringLength);
+					Console.Write(format, matrix[y, x], (x == highlight[0, 0] && y >= highlight[0, 1] && y <= highlight[1,1]) ? "[" : " ", (x == highlight[1, 0] && y >= highlight[0,1] && y <= highlight[1, 1]) ? "]" : ((x < maxX - 1) ? separator : " "));
+				}
+				Console.WriteLine();
+			}
+		}
+
+		/// <summary>
+		/// Finds the platform of specified size with the maximum sum
+		/// </summary>
+		/// <param name="matrix"></param>
+		/// <returns>{{topLeftCornerX, topLeftCornerY}, {botRightCornerX, botRightCornerY}}</returns>
+		public static int[,] MaxSumPlatform(this int[,] matrix, int platformX, int platformY = 0)
+		{
+			platformY = (platformY == 0) ? platformX : platformY;
+			int xMax = matrix.GetLength(0);
+			int yMax = matrix.GetLength(1);
+			int[,] platform = new int[2, 2];
+			int sum = 0;
+			int biggestSum = Int32.MinValue;
+			for (int y = 0; y < yMax - platformY; y++)
+			{
+				for (int x = 0; x < xMax - platformX; x++, sum = 0)
+				{
+					for (int currY = y; currY < y + platformY - 1; currY++)
+					{
+						for (int currX = x; currX < x + platformX - 1; currX++)
+						{
+							sum += matrix[currY, currX];
+						}
+					}
+					Console.WriteLine(".sum " + sum);
+					if (sum >= biggestSum)
+					{
+						biggestSum = sum;
+						platform[0, 0] = x;
+						platform[0, 1] = y;
+					}
+				}
+			}
+			platform[1, 0] = platform[0, 0] + platformX - 1;
+			platform[1, 1] = platform[0, 1] + platformY - 1;
+			return platform;
+		}
+
+		#endregion Arrays 2D
 	}
 }

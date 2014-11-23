@@ -482,36 +482,65 @@ namespace FundamentalsOfProgrammingWithCSharp
 					for (int i = 1; i <= 4; i++)
 					{
 						Console.WriteLine((PrintOrder)i + "/");
-						PrintMatrice2D(xy[0], xy[1], (PrintOrder)i);
+						PrintSeriesMatrix2D(xy[0], xy[1], (PrintOrder)i);
 					}
 				}
 
 				#endregion Exercise 12
 
+				#region Exercise 13
+				if (exercise == "13")
+				{
+					int[,] matrix = Random2DMatrix(8, maxValue: 26);
+					int[,] maxSumPlatform = matrix.MaxSumPlatform(3);
+					matrix.PrintMatrix2D(highlight: maxSumPlatform);
+				}
+				#endregion Exercise 13
+
 				#region Test
 
 				if (exercise == "test")
 				{
-					for (int y = 0; y < testIntMatrice1.GetLength(0); y++)
-					{
-						Console.Write("{");
-						for (int x = 0; x < testIntMatrice1.GetLength(1); x++)
-						{
-							Console.Write(" " + testIntMatrice1[y, x] + (x == testIntMatrice1.GetLength(0) - 1 ? "," : " "));
-						}
-						Console.WriteLine("}");
-					}
+					testIntMatrice1.PrintMatrix2D();
+					Console.WriteLine();
+					Random2DMatrix(10).PrintMatrix2D();
 				}
 
 				#endregion Test
 			}
 		}
 
-		private enum PrintOrder { a = 1, b = 2, c = 3, d = 4 };
-
-		private static void PrintMatrice2D(int x, int y, PrintOrder order)
+		public static int[,] Random2DMatrix (int x, int y = 0, int maxValue = 1000)
 		{
-			if (order == PrintOrder.a)
+			y = (y == 0) ? x : y;
+			int[,] array = new int[y, x];
+			Random randomO = new Random();
+			for (;y > 0; y--) {
+				for (int currX = 0; currX < x; currX++)
+				{
+					array[y - 1, currX] = randomO.Next(maxValue);
+				}
+			}
+			return array;
+		}
+
+		private enum PrintOrder { normal = 0, descendingColumns = 1, alternate = 2, diagonalAscending = 3, spiral = 4 };
+
+		private static void PrintSeriesMatrix2D(int x, int y, PrintOrder order = PrintOrder.normal)
+		{
+			if (order == PrintOrder.normal)
+			{
+				for (int currX = 0, currY = 0, c = 1; currY < y; currX = 0, currY++)
+				{
+					for (; currX < x; currX++, c++)
+					{
+						Console.Write("{0, 3}", c);
+					}
+					Console.WriteLine();
+				}
+			}
+
+			if (order == PrintOrder.descendingColumns)
 			{
 				for (int currY = 0, currX = 0, c = 1; currY < y; currY++, currX = 0, c = (c - (x * y)) + 1)
 				{
@@ -523,7 +552,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 				}
 			}
 
-			if (order == PrintOrder.b)
+			if (order == PrintOrder.alternate)
 			{
 				for (int currX = 0, currY = 0, c = 1; currY < y; currY++, currX = 0, c = currY + 1)
 				{
@@ -543,7 +572,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 				}
 			}
 
-			if (order == PrintOrder.c)
+			if (order == PrintOrder.diagonalAscending)
 			{
 				int[,] matrix = new int[x, y];
 
@@ -573,7 +602,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 				}
 			}
 
-			if (order == PrintOrder.d)
+			if (order == PrintOrder.spiral)
 			{
 				int[,] matrix = new int[x, y];
 				int[] vector = new int[] { -1, 0 };
@@ -599,7 +628,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 						if (currY == y - 1 - offset)
 						{
 							vector[0] = 0;
-							vector[1] = - 1;
+							vector[1] = -1;
 						}
 						else if (currY == 0 + offset)
 						{
