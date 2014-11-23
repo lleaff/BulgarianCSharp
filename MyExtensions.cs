@@ -71,7 +71,7 @@ namespace ExtensionMethods
 			return result;
 		}
 
-		#region Arrays
+		#region Arrays & Lists
 
 		public static bool IsSymmetric<T>(this T[] input) where T : IComparable
 		{ //idk if the "where" is needed with Equals()
@@ -190,7 +190,7 @@ namespace ExtensionMethods
 		/// <typeparam name="T"></typeparam>
 		/// <param name="array"></param>
 		/// <param name="position">1 for most frequent value, 2 for second most frequent, ...</param>
-		/// <returns></returns>
+		/// <returns>Default value: array[0]</returns>
 		public static T MostFrequentValue<T>(this IList<T> array, out int frequencyValue, int position = 1) where T : IComparable
 		{
 			frequencyValue = 0;
@@ -322,6 +322,6 @@ namespace ExtensionMethods
 			return Array.ConvertAll(convertedArray, val => (double)val);
 		}
 
-		#endregion Arrays
+		#endregion Arrays & Lists
 	}
 }

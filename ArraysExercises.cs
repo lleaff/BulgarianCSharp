@@ -545,6 +545,37 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 			if (order == PrintOrder.c)
 			{
+				int[,] matrix = new int[y, x];
+				
+				for (int c = 1, currX = 0, currY = y - 1; c <= x * y;c++)
+				{
+					matrix[currY, currX] = c;
+					if (currX + 1 < x && currY + 1 < y)
+					{
+						currX++;
+						currY++;
+					}
+					else
+					{
+						int diffY = currY;
+						currY = Math.Max(0, currY - currX - 1);
+						currX = Math.Max(0, currX - diffY + 1);
+					}
+				}
+
+				for (int currX = 0, currY = 0; currY < y; currY++, currX = 0)
+				{
+					for (; currX < x; currX++)
+					{
+						Console.Write("{0, 3}", matrix[currY, currX]);
+					}
+					Console.WriteLine();
+				}
+			}
+
+			if (order == PrintOrder.d)
+			{
+
 			}
 		}
 
