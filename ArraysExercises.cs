@@ -505,10 +505,13 @@ namespace FundamentalsOfProgrammingWithCSharp
 				{
 					int[,] matrix2d = Random2dMatrix(9, maxValue: 4);
 					matrix2d.Print();
-					Console.WriteLine(" ==----......." + ".......----==");
+					Console.WriteLine("...........................");
 					int[,] matrix2dLongestSequence = matrix2d.LongestSequence();
-					matrix2dLongestSequence.Print();
 					Console.WriteLine("The longest sequence of equal values in this matrix is {0} consecutive {1}", matrix2dLongestSequence.GetLength(1), matrix2d[matrix2dLongestSequence[0, 0], matrix2dLongestSequence[0, 1]]);
+					Console.WriteLine("...........................");
+					Console.WriteLine("Indices:");
+					matrix2dLongestSequence.Print(swapXY: true, highlight: new int[,] {{0,0},{matrix2dLongestSequence.GetLength(0) - 1, matrix2dLongestSequence.GetLength(1) - 1}});
+					
 				}
 
 				#endregion Exercise 14

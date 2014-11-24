@@ -326,13 +326,33 @@ namespace ExtensionMethods
 
 		#region Arrays 2D
 
-		public static T[] Extract<T>(this T[,] matrix, int y, int start = 0, int end = 0)
+		/// <summary>
+		/// Returns a single dimensional array from a two dimensional one
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="matrix"></param>
+		/// <param name="extractY">Index [y,-] of the row to extract</param>
+		/// <param name="extractX">Index [-, x] of the column to extract, leave to default value to extract a row</param>
+		/// <param name="start">Index of the value from which to start extracting in the chosen slice</param>
+		/// <param name="end">Index of the value after which to stop extracting in the chosen slice</param>
+		/// <returns></returns>
+		public static T[] Extract<T>(this T[,] matrix, int extractY, int extractX = Int32.MinValue, int start = 0, int end = 0)
 		{
 			end = end == 0 ? matrix.GetLength(1) - 1 : end;
 			T[] array = new T[end - start + 1];
-			for (int x = end; x >= start; x--)
+			if (extractX == Int32.MinValue)
 			{
-				array[x - start] = matrix[y, x];
+				for (int x = end; x >= start; x--)
+				{
+					array[x - start] = matrix[extractY, x];
+				}
+			}
+			else
+			{
+				for (int y = end; y >= start; y--)
+				{
+					array[y - start] = matrix[y, extractX];
+				}
 			}
 			return array;
 		}
@@ -351,16 +371,38 @@ namespace ExtensionMethods
 		}
 
 		/// <summary>
+		/// Swap the x and y axes in a 2d array
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="matrixXY"></param>
+		/// <returns>The array with swapped axes</returns>
+		public static T[,] SwapAxes<T>(this T[,] matrixXY)
+		{
+			int xLength = matrixXY.GetLength(0);
+			int yLength = matrixXY.GetLength(1);
+			T[,] matrixYX = new T[yLength, xLength];
+			for (int y = yLength - 1, x = xLength - 1; y >= 0; y--, x = xLength - 1)
+			{
+				for (; x >= 0; x--)
+				{
+					matrixYX[y, x] = matrixXY[x, y];
+				}
+			}
+			return matrixYX;
+		}
+
+		/// <summary>
 		/// Prints a 2D matrix
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="matrix"></param>
 		/// <param name="separator">Character to insert between the values</param>
-		/// <param name="swapXY">Swap the X and Y axis</param>
+		/// <param name="swapXY">Swap the X and Y axes</param>
 		/// <param name="highlight">Format: {{topLeftCornerX, topLeftCornerY}{botRightCornerX, botRightCornerY}}, highlights a platform</param>
 		public static void Print<T>(this T[,] matrix, string separator = ",", bool swapXY = false, int[,] highlight = null)
 		{
 			highlight = highlight ?? new int[,] { { -1, -1 }, { -1, -1 } }; //no highlight
+			//highlight = swapXY ? highlight.SwapAxes() : highlight;
 			//find alignment value
 			int stringLength = 1;
 			foreach (T value in matrix)
@@ -372,31 +414,21 @@ namespace ExtensionMethods
 			int maxY = 0;
 			if (swapXY)
 			{
-				T[,] switchedMatrix = new T[matrix.GetLength(1), matrix.GetLength(0)];
-				maxX = switchedMatrix.GetLength(0);
-				maxY = switchedMatrix.GetLength(1);
-				for (int y = 0; y < maxY; y++)
-				{
-					for (int x = 0; x < maxX; x++)
-					{
-						switchedMatrix[y, x] = matrix[x, y];
-					}
-				}
-				matrixB = switchedMatrix;
+				matrixB = matrix.SwapAxes();
 			}
 			else
 			{
 				matrixB = matrix;
-				maxX = matrixB.GetLength(1);
-				maxY = matrixB.GetLength(0);
 			}
-
+			maxX = matrixB.GetLength(1);
+			maxY = matrixB.GetLength(0);
+			if (number)
 			for (int y = 0; y < maxY; y++)
 			{
 				for (int x = 0; x < maxX; x++)
 				{
 					string format = String.Format("{{1}}{{0,{0}}}{{2}}", stringLength);
-					Console.Write(format, matrix[y, x], (x == highlight[0, 0] && y >= highlight[0, 1] && y <= highlight[1, 1]) ? "[" : " ", (x == highlight[1, 0] && y >= highlight[0, 1] && y <= highlight[1, 1]) ? "]" : ((x < maxX - 1) ? separator : " "));
+					Console.Write(format, matrixB[y, x], (x == highlight[0, 0] && y >= highlight[0, 1] && y <= highlight[1, 1]) ? "[" : " ", (x == highlight[1, 0] && y >= highlight[0, 1] && y <= highlight[1, 1]) ? "]" : ((x < maxX - 1) ? separator : " "));
 				}
 				Console.WriteLine();
 			}
