@@ -326,6 +326,30 @@ namespace ExtensionMethods
 
 		#region Arrays 2D
 
+		public static T[] Extract<T>(this T[,] matrix, int y, int start = 0, int end = 0)
+		{
+			end = end == 0 ? matrix.GetLength(1) - 1 : end;
+			T[] array = new T[end - start + 1];
+			for (int x = end; x >= start; x--)
+			{
+				array[x - start] = matrix[y, x];
+			}
+			return array;
+		}
+
+		public static int[] Biggest<T>(this T[,] matrix) where T : IComparable
+		{
+			int[] biggestInX = new int[matrix.GetLength(0)];
+			for (int i = 0; i < matrix.GetLength(0); i++)
+			{
+				biggestInX[i] = matrix.Extract(i).Biggest();
+			}
+			int x = 0, y = 0;
+			y = biggestInX.Biggest();
+			x = biggestInX[y];
+			return new int[] { y, x };
+		}
+
 		/// <summary>
 		/// Prints a 2D matrix
 		/// </summary>
@@ -334,7 +358,7 @@ namespace ExtensionMethods
 		/// <param name="separator">Character to insert between the values</param>
 		/// <param name="swapXY">Swap the X and Y axis</param>
 		/// <param name="highlight">Format: {{topLeftCornerX, topLeftCornerY}{botRightCornerX, botRightCornerY}}, highlights a platform</param>
-		public static void PrintMatrix2D<T>(this T[,] matrix, string separator = ",", bool swapXY = false, int[,] highlight = null)
+		public static void Print<T>(this T[,] matrix, string separator = ",", bool swapXY = false, int[,] highlight = null)
 		{
 			highlight = highlight ?? new int[,] { { -1, -1 }, { -1, -1 } }; //no highlight
 			//find alignment value
@@ -372,7 +396,7 @@ namespace ExtensionMethods
 				for (int x = 0; x < maxX; x++)
 				{
 					string format = String.Format("{{1}}{{0,{0}}}{{2}}", stringLength);
-					Console.Write(format, matrix[y, x], (x == highlight[0, 0] && y >= highlight[0, 1] && y <= highlight[1,1]) ? "[" : " ", (x == highlight[1, 0] && y >= highlight[0,1] && y <= highlight[1, 1]) ? "]" : ((x < maxX - 1) ? separator : " "));
+					Console.Write(format, matrix[y, x], (x == highlight[0, 0] && y >= highlight[0, 1] && y <= highlight[1, 1]) ? "[" : " ", (x == highlight[1, 0] && y >= highlight[0, 1] && y <= highlight[1, 1]) ? "]" : ((x < maxX - 1) ? separator : " "));
 				}
 				Console.WriteLine();
 			}
@@ -416,6 +440,176 @@ namespace ExtensionMethods
 			return platform;
 		}
 
+		/// <summary>
+		/// Finds the longest sequence of equal elements in a 2d array
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="matrix"></param>
+		/// <param name="diagonal">Whether to check for diagonal sequences or not</param>
+		/// <param name="vertical">Whether to check for vertical sequences or not</param>
+		/// <param name="horizontal">Whether to check for horizontal sequences or not</param>
+		/// <returns>The {y, z} indices of each member of the sequence</returns>
+		public static int[,] LongestSequence<T>(this T[,] matrix, bool diagonal = true, bool vertical = true, bool horizontal = true) where T : IComparable
+		{
+			int yMax = matrix.GetLength(0);
+			int xMax = matrix.GetLength(1);
+			int[, ,] sequences = new int[yMax, xMax, 4]; //3rd dimension is sequence length in: [0] horizontal [1] vertical [2] diagonal1 [3] diagonal2
+			for (int y = 0, x = 0; y < yMax; y++, x = 0)
+			{
+				for (; x < xMax; x++)
+				{
+					if (horizontal && x > 0)
+					{
+						if (matrix[y, x].CompareTo(matrix[y, x - 1]) == 0 && sequences[y, x, 0] == 0)
+							sequences[y, x, 0] = sequences[y, x - 1, 0] + 1;
+					}
+					if (vertical && y > 0)
+					{
+						if (matrix[y, x].CompareTo(matrix[y - 1, x]) == 0 && sequences[y, x, 1] == 0)
+							sequences[y, x, 1] = sequences[y - 1, x, 1] + 1;
+					}
+					if (diagonal && x - 1 > 0 && y - 1 > 0)
+					{
+						if (matrix[y, x].CompareTo(matrix[y - 1, x - 1]) == 0 && sequences[y, x, 2] == 0)
+							sequences[y, x, 2] = sequences[y - 1, x - 1, 2] + 1;
+					}
+					if (diagonal && x - 1 > 0 && y + 1 < xMax)
+					{
+						if (matrix[y, x].CompareTo(matrix[y + 1, x - 1]) == 0 && sequences[y, x, 3] == 0)
+							sequences[y, x, 3] = sequences[y + 1, x - 1, 3] + 1;
+					}
+				}
+			}
+			int[] seqEndIndex = sequences.Biggest();
+
+			#region DEBUG
+
+			//for (int d = 0; d < 4; d++) //DEBUG
+			//{ //DEBUG
+			//	string dimensionName; //DEBUG
+			//	switch (d) //DEBUG
+			//	{ //DEBUG
+			//		case 0: dimensionName = "horizontal [-]"; //DEBUG
+			//			break; //DEBUG
+			//		case 1: dimensionName = "vertical [|]"; //DEBUG
+			//			break; //DEBUG
+			//		case 2: dimensionName = "diagonal [\\]"; //DEBUG
+			//			break; //DEBUG
+			//		case 3: dimensionName = "diagonal [/]"; //DEBUG
+			//			break; //DEBUG
+			//		default: dimensionName = ""; //DEBUG
+			//			break; //DEBUG
+			//	} //DEBUG
+			//	Console.WriteLine(dimensionName + " sequences[y,x,"+ d + "]:"); //DEBUG
+			//	sequences.Extract(d, 2).Print(); //DEBUG
+			//} //DEBUG
+
+			#endregion DEBUG
+
+			int[,] seqIndices = new int[2, sequences[seqEndIndex[0], seqEndIndex[1], seqEndIndex[2]] + 1];
+			int seqLength = sequences[seqEndIndex[0], seqEndIndex[1], seqEndIndex[2]] + 1;
+			//Console.WriteLine("seqLength=" + seqLength);//DEBUG
+			//Console.WriteLine("seqEndIndex=" + seqEndIndex[0] + "," + seqEndIndex[1] + "," + seqEndIndex[2]);//DEBUG
+			for (int y = seqEndIndex[0], x = seqEndIndex[1], c = 0; c < seqLength; c++)
+			{
+				seqIndices[0, seqLength - 1 - c] = y;
+				seqIndices[1, seqLength - 1 - c] = x;
+
+				if (seqEndIndex[2] == 0) //horizontal
+				{
+					x--;
+				}
+				else if (seqEndIndex[2] == 1) //vertical
+				{
+					y--;
+				}
+				else if (seqEndIndex[2] == 2) //diagonal1
+				{
+					y--;
+					x--;
+				}
+				else if (seqEndIndex[2] == 3) //diagonal2
+				{
+					y--;
+					x++;
+				}
+			}
+			return seqIndices;
+		}
+
 		#endregion Arrays 2D
+
+		#region Arrays 3D
+
+		/// <summary>
+		/// Finds the biggest value in a 3 dimensional array.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="matrix"></param>
+		/// <param name="subTopLeftXY">Enclosing box top left corner {z, y, x}</param>
+		/// <param name="subBotRightXY">Enclosing box bottom right corner {z, y , x} (botRight z = topLeft z)</param>
+		/// <param name="subDepth">Enclosing box depth {z}</param>
+		/// <returns>{z, y, x} index of the biggest value found in the matrix</returns>
+		public static int[] Biggest<T>(this T[, ,] matrix, int[] subTopLeftXY = null, int[] subBotRightXY = null, int subDepth = 0) where T : IComparable
+		{
+			int maxZ, maxY, maxX;
+			if (subTopLeftXY == null || subTopLeftXY[0] != subBotRightXY[0])
+			{
+				maxX = matrix.GetLength(2);
+				maxY = matrix.GetLength(1);
+				maxZ = matrix.GetLength(0);
+				subTopLeftXY = subTopLeftXY ?? new int[] { 0, 0, 0 };
+				subBotRightXY = subBotRightXY ?? new int[] { maxZ, maxY, maxX };
+			}
+			else
+			{
+				maxX = subBotRightXY[2] - subTopLeftXY[2] + 1;
+				maxY = subBotRightXY[1] - subTopLeftXY[1] + 1;
+				maxZ = subDepth + subTopLeftXY[0] + 1;
+			}
+			T biggest = default(T);
+			int[] biggestIndex = new int[3];
+			bool biggestIsDefault = true;
+			for (int z = subTopLeftXY[0], y = subTopLeftXY[1], x = subTopLeftXY[2]; z < maxZ; z++, y = 0)
+			{
+				for (; y < maxY; y++, x = 0)
+				{
+					for (; x < maxX; x++)
+					{
+						if (matrix[z, y, x].CompareTo(biggest) > 0 || biggestIsDefault)
+						{
+							biggest = matrix[z, y, x];
+							biggestIndex[0] = z;
+							biggestIndex[1] = y;
+							biggestIndex[2] = x;
+							biggestIsDefault = false;
+						}
+					}
+				}
+			}
+			return biggestIndex;
+		}
+
+		public static T[,] Extract<T>(this T[, ,] matrix3d, int z, int dimension = 2)
+		{
+			T[,] matrix2d = new T[matrix3d.GetLength(dimension == 0 ? 1 : 0), matrix3d.GetLength(dimension == 1 ? 2 : 1)];
+			//copy values to new array
+
+			for (int matrix2dYLength = matrix2d.GetLength(0), matrix2dXLength = matrix2d.GetLength(1), y = matrix2dYLength - 1, x = matrix2dXLength - 1; y >= 0; y--, x = matrix2dXLength - 1)
+			{
+				for (; x >= 0; x--)
+				{
+					if (dimension == 0)
+						matrix2d[y, x] = matrix3d[z, y, x];
+					if (dimension == 1)
+						matrix2d[y, x] = matrix3d[y, z, x];
+					if (dimension == 2)
+						matrix2d[y, x] = matrix3d[y, x, z];
+				}
+			}
+			return matrix2d;
+		}
+
+		#endregion Arrays 3D
 	}
 }

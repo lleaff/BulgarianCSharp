@@ -489,33 +489,58 @@ namespace FundamentalsOfProgrammingWithCSharp
 				#endregion Exercise 12
 
 				#region Exercise 13
+
 				if (exercise == "13")
 				{
-					int[,] matrix = Random2DMatrix(8, maxValue: 26);
+					int[,] matrix = Random2dMatrix(8, maxValue: 26);
 					int[,] maxSumPlatform = matrix.MaxSumPlatform(3);
-					matrix.PrintMatrix2D(highlight: maxSumPlatform);
+					matrix.Print(highlight: maxSumPlatform);
 				}
+
 				#endregion Exercise 13
+
+				#region Exercise 14
+
+				if (exercise == "14")
+				{
+					int[,] matrix2d = Random2dMatrix(9, maxValue: 4);
+					matrix2d.Print();
+					Console.WriteLine(" ==----......." + ".......----==");
+					int[,] matrix2dLongestSequence = matrix2d.LongestSequence();
+					matrix2dLongestSequence.Print();
+					Console.WriteLine("The longest sequence of equal values in this matrix is {0} consecutive {1}", matrix2dLongestSequence.GetLength(1), matrix2d[matrix2dLongestSequence[0, 0], matrix2dLongestSequence[0, 1]]);
+				}
+
+				#endregion Exercise 14
+
+				#region Exercise 15
+
+				if (exercise == "15")
+				{
+				}
+
+				#endregion Exercise 15
 
 				#region Test
 
 				if (exercise == "test")
 				{
-					testIntMatrice1.PrintMatrix2D();
-					Console.WriteLine();
-					Random2DMatrix(10).PrintMatrix2D();
+					int[, ,] matrix3d = new int[3, 2, 2] { { { 24, 954 }, { 353, 432 } }, { { 562, 455 }, { 104, 6 } }, { { 810, 675 }, { 0, 534 } } };
+					int[] biggest = matrix3d.Biggest();
+					Console.WriteLine("matrix3d's biggest value is [{0}] = {1}", biggest[0] + ", " + biggest[1] + ", " + biggest[2], matrix3d[biggest[0], biggest[1], biggest[2]]);
 				}
 
 				#endregion Test
 			}
 		}
 
-		public static int[,] Random2DMatrix (int x, int y = 0, int maxValue = 1000)
+		public static int[,] Random2dMatrix(int x, int y = 0, int maxValue = 1000)
 		{
 			y = (y == 0) ? x : y;
 			int[,] array = new int[y, x];
 			Random randomO = new Random();
-			for (;y > 0; y--) {
+			for (; y > 0; y--)
+			{
 				for (int currX = 0; currX < x; currX++)
 				{
 					array[y - 1, currX] = randomO.Next(maxValue);
