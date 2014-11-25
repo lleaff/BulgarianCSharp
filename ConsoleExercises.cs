@@ -21,7 +21,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 		{
 			#region Exercise 2
 
-			Exercises.Title("2");
+			ConsoleOutput.Title("2");
 			if (YesNo())
 			{
 				Console.WriteLine("First name?");
@@ -46,7 +46,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 			#region Exercise 5
 
-			Exercises.Title("5");
+			ConsoleOutput.Title("5");
 			if (YesNo())
 			{
 				Console.WriteLine("please input min integer and max integer separated by a space");
@@ -89,14 +89,14 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 			#region Exercise 6
 
-			Exercises.Title("6");
+			ConsoleOutput.Title("6");
 			if (YesNo())
 			{
 				Console.Write("Enter 2 numbers to compare" + Environment.NewLine + "Number 1: ");
 				double[] nums = new double[2];
-				nums[0] = Exercises.ReadDouble();
+				nums[0] = ConsoleInput.ReadDouble();
 				Console.Write("Number 2: ");
-				nums[1] = Exercises.ReadDouble();
+				nums[1] = ConsoleInput.ReadDouble();
 				if (nums[0] == nums[1])
 					Console.WriteLine("These numbers are the same");
 				else
@@ -107,7 +107,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 			#region Exercise 7
 
-			Exercises.Title("7");
+			ConsoleOutput.Title("7");
 			if (YesNo())
 			{
 				Console.WriteLine("Input 5 numbers please, their sum  will be computed.");
@@ -116,7 +116,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 				for (int i = 1; i <= 5; i++)
 				{
 					Console.Write("Number {0}", i);
-					nums[i - 1] = Exercises.ReadDouble();
+					nums[i - 1] = ConsoleInput.ReadDouble();
 					sum += nums[i - 1];
 				}
 				Console.WriteLine("The sum of these numbers is:" + Environment.NewLine + sum);
@@ -126,7 +126,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 			#region Exercise 8
 
-			Exercises.Title("8");
+			ConsoleOutput.Title("8");
 			if (YesNo())
 			{
 				Console.WriteLine("Input numbers to compare and press Enter when you're finished");

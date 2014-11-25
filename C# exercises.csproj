@@ -34,6 +34,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArraysExercises.cs" />
+    <Compile Include="ConsoleInput.cs" />
+    <Compile Include="ConsoleOutput.cs" />
     <Compile Include="GenericMath.cs" />
     <Compile Include="Linq\ExpressionUtil.cs" />
     <Compile Include="NullOp.cs" />

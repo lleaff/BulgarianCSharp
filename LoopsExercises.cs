@@ -68,7 +68,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				if (exercise == 3)
 				{
-					double[] nums = Exercises.AskDoubleArray();
+					double[] nums = ConsoleInput.AskDoubleArray();
 					double smallest = nums[0], biggest = nums[0];
 
 					foreach (double num in nums)
@@ -123,9 +123,9 @@ namespace FundamentalsOfProgrammingWithCSharp
 				{
 					Console.WriteLine("Let's calculate N!/K! (with K < N)");
 					Console.Write("N?   ");
-					int n = Exercises.ReadInt32(1);
+					int n = ConsoleInput.ReadInt(1);
 					Console.Write("K?   ");
-					int k = Exercises.ReadInt32(1, n - 1);
+					int k = ConsoleInput.ReadInt(1, n - 1);
 					Console.WriteLine("{0}!/{1}! = {2}", n, k, n.FactorialDivision(k));
 				}
 
@@ -133,9 +133,9 @@ namespace FundamentalsOfProgrammingWithCSharp
 				{
 					Console.WriteLine("Let's calculate  N!*K! / (N-K)!  (with K < N)");
 					Console.Write("N? ");
-					int n = Exercises.ReadInt32(1);
+					int n = ConsoleInput.ReadInt(1);
 					Console.Write("K? ");
-					int k = Exercises.ReadInt32(1, n - 1);
+					int k = ConsoleInput.ReadInt(1, n - 1);
 
 					int _temp1 = n.Factorial(n - k);
 					int _temp2 = k.Factorial(n - k);

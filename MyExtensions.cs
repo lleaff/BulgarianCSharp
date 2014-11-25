@@ -73,6 +73,16 @@ namespace ExtensionMethods
 
 		#region Arrays & Lists
 
+		public static T[] ToArray<T>(this IList<T> list)
+		{
+			T[] array = new T[list.Count];
+			for (int i = list.Count - 1; i >= 0; i--)
+			{
+				array[i] = list[i];
+			}
+			return array;
+		}
+
 		public static bool IsSymmetric<T>(this T[] input) where T : IComparable
 		{ //idk if the "where" is needed with Equals()
 			if (input.Length <= 1)
@@ -154,6 +164,18 @@ namespace ExtensionMethods
 			for (int i = 0; i < array1.Count; i++)
 			{
 				if (EqualityComparer<T>.Default.Equals(array1[i], array2[i]))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static bool Contains<T>(this IList<T> array, T value) where T : IComparable
+		{
+			foreach (T arrayVal in array)
+			{
+				if (value.CompareTo(arrayVal) == 0)
 				{
 					return true;
 				}
@@ -392,6 +414,34 @@ namespace ExtensionMethods
 		}
 
 		/// <summary>
+		/// Swap the values of two specified slices in the specified dimension
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="matrix"></param>
+		/// <param name="dimension">0: swap columns (y), 1: swap rows (x)</param>
+		/// <param name="slice1">Which row or column to swap</param>
+		/// <param name="slice2">Which row or column to swap with the other</param>
+		/// <returns></returns>
+		public static T[,] SwapSlices<T>(this T[,] matrix, int dimension, int slice1, int slice2)  
+		{
+			T[,] matrixSwapped = matrix;
+			for (int i = matrix.GetLength(dimension) - 1; i >= 0; i--)
+			{
+				if (dimension == 0)
+				{
+					matrixSwapped[i, slice1] = matrix[i, slice2];
+					matrixSwapped[i, slice2] = matrix[i, slice1];
+				}
+				else
+				{
+					matrixSwapped[slice1, i] = matrix[slice2, i];
+					matrixSwapped[slice2, i] = matrix[slice1, i];
+				}
+			}
+			return matrixSwapped;
+		}
+
+		/// <summary>
 		/// Prints a 2D matrix
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
@@ -422,7 +472,6 @@ namespace ExtensionMethods
 			}
 			maxX = matrixB.GetLength(1);
 			maxY = matrixB.GetLength(0);
-			if (number)
 			for (int y = 0; y < maxY; y++)
 			{
 				for (int x = 0; x < maxX; x++)

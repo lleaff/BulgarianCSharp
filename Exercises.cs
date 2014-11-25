@@ -14,17 +14,19 @@ namespace FundamentalsOfProgrammingWithCSharp
 				"3. Console\n" +
 				"4. Loop\n" +
 				"5. Arrays\n" +
-				"6. Numeral Systems\n");
+				"6. Numeral Systems");
 
 				string selector = Console.ReadLine();
 
 				switch (selector)
 				{
 					case "0":
+						ConsoleOutput.Title("Scratchpad");
 						TestScratchpad.DoScratchpad();
 						break;
 
 					case "1":
+						ConsoleOutput.Title("Variables exercises");
 						VariableExercises.DoVariableExercises();
 						break;
 
@@ -33,14 +35,17 @@ namespace FundamentalsOfProgrammingWithCSharp
 						break;
 
 					case "3":
+						ConsoleOutput.Title("Console Exercises");
 						ConsoleExercises.DoExercises();
 						break;
 
 					case "4":
+						ConsoleOutput.Title("Loops exercises");
 						LoopsExercises.DoExercises();
 						break;
 
 					case "5":
+						ConsoleOutput.Title("Arrays exercises");
 						ArraysExercises.DoExercises();
 						break;
 
@@ -52,101 +57,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 			}
 		}
 
-		static public void Title(string title)
-		{
-			Console.WriteLine("==================={0}{1}{0}===================", Environment.NewLine, title);
-		}
+		
 
-		static public double ReadDouble()
-		{
-			double num;
-			while (true)
-			{
-				string input = Console.ReadLine();
-				if (Double.TryParse(input, out num) == true)
-					return num;
-				else
-					Console.WriteLine("Input a number please");
-			}
-		}
-
-		static public int ReadInt32(int minLimit = Int32.MinValue, int maxLimit = Int32.MaxValue)
-		{
-			int num = 0;
-			while (true)
-			{
-				string input = Console.ReadLine();
-				if (Int32.TryParse(input, out num) && num >= minLimit && num <= maxLimit)
-				{
-					return num;
-				}
-				else
-				{
-					Console.WriteLine("Input an integer number between {0} and {1}.", minLimit, maxLimit);
-				}
-			}
-		}
-
-		static public double[] AskDoubleArray(int limit = 0)
-		{
-			Console.WriteLine("Input numbers, press {Enter} between each of them.\n Press {Enter} on an empty line when you're finished.");
-			System.Collections.Generic.List<double> nums = new System.Collections.Generic.List<double>();
-			int listCounter = 0;
-			while (limit == 0 || listCounter < limit)
-			{
-				double num;
-				string input = Console.ReadLine();
-				if (double.TryParse(input, out num))
-				{
-					nums.Add(num);
-					listCounter++;
-				}
-				else if (input == "")
-				{
-					break;
-				}
-				else
-				{
-					Console.WriteLine("Input a number please");
-				}
-			}
-			double[] result = new double[nums.Count];
-			for (int i = 0; i < nums.Count; i++)
-			{
-				result[i] = nums[i];
-			}
-			return result;
-		}
-
-		/// <summary>
-		/// Reads a string of comma-separated integers and returns them in an array.
-		/// </summary>
-		/// <param name="limit">Array max size</param>
-		/// <returns></returns>
-		static public int[] ReadIntArrayCommaSeparated(int limit = Int32.MaxValue)
-		{
-			int[] nums;
-			for (bool done = false; !done; )
-			{
-				string input = Console.ReadLine();
-				string[] inputs = input.Split(new string[] { ",", ", ", " ,", " " }, StringSplitOptions.RemoveEmptyEntries);
-				nums = new int[inputs.Length];
-				for (int i = 0; i < inputs.Length && i < limit; i++)
-				{
-					if (!Int32.TryParse(inputs[i], out nums[i]))
-					{
-						done = false;
-						Console.WriteLine("Please input integers separated by commas like this:\n63, 43, 0, 54, 205, 4234, -324, 459");
-						break;
-					}
-					done = true;
-				}
-				if (done)
-				{
-					return nums;
-				}
-			}
-			return new int[0];
-		}
 	}
 }

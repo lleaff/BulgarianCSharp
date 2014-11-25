@@ -26,6 +26,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 			{
 				Console.WriteLine("Exercise n°?");
 				exercise = Console.ReadLine();
+				ConsoleOutput.Title(exercise);
 
 				#region Exercise 1
 
@@ -151,7 +152,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 				if (exercise == "4")
 				{
 					Console.WriteLine("Input integers to put in an array, separated by commas");
-					int[] nums = Exercises.ReadIntArrayCommaSeparated();
+					int[] nums = ConsoleInput.ReadIntArrayCommaSeparated();
 					int[] seriesLength = new int[nums.Length];
 					seriesLength.Fill(1);
 					//Series check
@@ -178,7 +179,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 				if (exercise == "5")
 				{
 					Console.WriteLine("Input integers to put in an array, separated by commas");
-					int[] nums = Exercises.ReadIntArrayCommaSeparated();
+					int[] nums = ConsoleInput.ReadIntArrayCommaSeparated();
 					int[] seriesLength = new int[nums.Length];
 					seriesLength.Fill(1);
 					for (int i = 1; i < nums.Length; i++)
@@ -208,7 +209,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 				if (exercise == "6")
 				{
 					Console.WriteLine("Input integers separated by commas to put into an array");
-					int[] nums = Exercises.ReadIntArrayCommaSeparated();
+					int[] nums = ConsoleInput.ReadIntArrayCommaSeparated();
 					int[] numsMarked = new int[nums.Length];
 					for (int i = 0; i < nums.Length - 1; i++)
 					{
@@ -243,9 +244,9 @@ namespace FundamentalsOfProgrammingWithCSharp
 				if (exercise == "7")
 				{
 					Console.WriteLine("Input integers separated by commas to put into an array");
-					int[] nums = Exercises.ReadIntArrayCommaSeparated();
+					int[] nums = ConsoleInput.ReadIntArrayCommaSeparated();
 					Console.WriteLine("Input a number K (K < {0}), the program will find the series of integers of length K with the maximum sum.", nums.Length);
-					int k = Exercises.ReadInt32(0, nums.Length);
+					int k = ConsoleInput.ReadInt(0, nums.Length);
 					int[] sums = new int[nums.Length];
 					for (int i = 0; i < nums.Length - k; i++)
 					{
@@ -297,7 +298,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 							case "3":
 								Console.WriteLine("Input integers separated by commas:");
-								array = Exercises.ReadIntArrayCommaSeparated();
+								array = ConsoleInput.ReadIntArrayCommaSeparated();
 								array.Sort(SortOption.Selection);
 								break;
 
@@ -346,7 +347,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 							case "5":
 								Console.WriteLine("Input integers separated by commas:");
-								array = Exercises.ReadIntArrayCommaSeparated();
+								array = ConsoleInput.ReadIntArrayCommaSeparated();
 								array = array.MaxSumSubsequence();
 								break;
 
@@ -396,7 +397,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 								break;
 
 							case "5":
-								mostFrequentValue = Exercises.ReadIntArrayCommaSeparated().MostFrequentValue(out frequency);
+								mostFrequentValue = ConsoleInput.ReadIntArrayCommaSeparated().MostFrequentValue(out frequency);
 								break;
 
 							default:
@@ -416,7 +417,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 					for (string input = ""; input != "quit" && input != "q"; )
 					{
 						Console.WriteLine("Input an integer number:");
-						int sum = Exercises.ReadInt32();
+						int sum = ConsoleInput.ReadInt();
 						Console.WriteLine("Select an array in which to find a series of consecutive integers with a sum of {0}:", sum);
 						ArraysExercises.PrintArraySelection();
 						int[] neighbors;
@@ -441,7 +442,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 								break;
 
 							case "5":
-								neighbors = Exercises.ReadIntArrayCommaSeparated().ConsecutiveWithSum(sum);
+								neighbors = ConsoleInput.ReadIntArrayCommaSeparated().ConsecutiveWithSum(sum);
 								break;
 
 							default:
@@ -468,7 +469,7 @@ namespace FundamentalsOfProgrammingWithCSharp
 				if (exercise == "12")
 				{
 					Console.WriteLine("Input 1 or 2 numbers corresponding to the X and Y values of a square matrix");
-					int[] input = Exercises.ReadIntArrayCommaSeparated(2);
+					int[] input = ConsoleInput.ReadIntArrayCommaSeparated(2);
 					int[] xy = new int[2];
 					if (input.Length == 1)
 					{
@@ -507,11 +508,10 @@ namespace FundamentalsOfProgrammingWithCSharp
 					matrix2d.Print();
 					Console.WriteLine("...........................");
 					int[,] matrix2dLongestSequence = matrix2d.LongestSequence();
-					Console.WriteLine("The longest sequence of equal values in this matrix is {0} consecutive {1}", matrix2dLongestSequence.GetLength(1), matrix2d[matrix2dLongestSequence[0, 0], matrix2dLongestSequence[0, 1]]);
+					Console.WriteLine("The longest sequence of equal values in this matrix is {0} consecutive {1}", matrix2dLongestSequence.GetLength(1), matrix2d[matrix2dLongestSequence[0, 0], matrix2dLongestSequence[1, 0]]);
 					Console.WriteLine("...........................");
-					Console.WriteLine("Indices:");
-					matrix2dLongestSequence.Print(swapXY: true, highlight: new int[,] {{0,0},{matrix2dLongestSequence.GetLength(0) - 1, matrix2dLongestSequence.GetLength(1) - 1}});
-					
+					Console.WriteLine("[x, y] indices:");
+					matrix2dLongestSequence.SwapSlices(1, 0, 1).Print(swapXY: true, highlight: new int[,] { { 0, 0 }, { matrix2dLongestSequence.GetLength(0) - 1, matrix2dLongestSequence.GetLength(1) - 1 } });
 				}
 
 				#endregion Exercise 14
@@ -520,6 +520,18 @@ namespace FundamentalsOfProgrammingWithCSharp
 
 				if (exercise == "15")
 				{
+					Console.WriteLine("Input a word:");
+					char[] letters = ConsoleInput.ReadWordToCharArray(true);
+					Console.WriteLine("Letters position in alphabet:");
+					string numbers = "";
+					string lettersString = "";
+					for (int i = 0, l = letters.Length; i < l; i++)
+					{
+						numbers += String.Format("[ {0, -2}]", (int)Char.ToLower(letters[i]) - 96);
+						lettersString += String.Format("{0}", letters[i]);
+					}
+					ConsoleOutput.PrintSuperposed(lettersString, numbers, 1, 5);
+					
 				}
 
 				#endregion Exercise 15
@@ -531,6 +543,12 @@ namespace FundamentalsOfProgrammingWithCSharp
 					int[, ,] matrix3d = new int[3, 2, 2] { { { 24, 954 }, { 353, 432 } }, { { 562, 455 }, { 104, 6 } }, { { 810, 675 }, { 0, 534 } } };
 					int[] biggest = matrix3d.Biggest();
 					Console.WriteLine("matrix3d's biggest value is [{0}] = {1}", biggest[0] + ", " + biggest[1] + ", " + biggest[2], matrix3d[biggest[0], biggest[1], biggest[2]]);
+
+					for (char ch = 'A'; ch <= 'z' ; ch++)
+					{
+						Console.WriteLine("{0} - {1}", ch, (int)ch);
+					}
+
 				}
 
 				#endregion Test
