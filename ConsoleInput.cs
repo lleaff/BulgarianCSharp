@@ -95,7 +95,7 @@ namespace System
 					continue;
 				}
 				letter = input.KeyChar;
-				if ((onlyLatinLetters && (letter >= 'A' && letter <= 'Z' || letter >= 'a' && letter <= 'z')) || !(forbiddenCharacters.Contains(letter) && onlyLatinLetters))
+				if ((onlyLatinLetters && (letter >= 'A' && letter <= 'Z' || letter >= 'a' && letter <= 'z')) || (!onlyLatinLetters && !(forbiddenCharacters.Contains(letter) && onlyLatinLetters)))
 				{
 					letters.Add(letter);
 				}
@@ -137,7 +137,7 @@ namespace System
 					continue;
 				}
 				letter = input.KeyChar;
-				if ((onlyLatinLetters && (letter >= 'A' && letter <= 'Z' || letter >= 'a' && letter <= 'z')) || !(forbiddenCharacters.Contains(letter) && onlyLatinLetters))
+				if ((onlyLatinLetters && (letter >= 'A' && letter <= 'Z' || letter >= 'a' && letter <= 'z')) || (!onlyLatinLetters && !(forbiddenCharacters.Contains(letter) && onlyLatinLetters)))
 				{
 					letters.Add(letter);
 				}

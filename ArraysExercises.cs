@@ -530,36 +530,86 @@ namespace FundamentalsOfProgrammingWithCSharp
 						numbers += String.Format("[ {0, -2}]", (int)Char.ToLower(letters[i]) - 96);
 						lettersString += String.Format("{0}", letters[i]);
 					}
-					ConsoleOutput.PrintSuperposed(lettersString, numbers, 1, 5);
-					
+					ConsoleOutput.PrintSuperposed(lettersString, numbers, 1, 5);//BUGGED
 				}
 
 				#endregion Exercise 15
+
+				#region Exercise 16
+
+				//if (exercise == "16")
+				//{
+				//	int max = 50;
+				//	Console.WriteLine("Enter an integer i (0 <= i <= {0})", max);
+				//	int num = ConsoleInput.ReadInt(0, max);
+				//	Console.WriteLine("Let's try to find it in a series of random sorted arrays using binary search");
+				//	for (int c = 1; c <= 10; c++)
+				//	{
+				//		int[] array = new int[20];
+				//		array = ArraysExercises.RandomIntArray(20, 0, 100);
+				//		array.Sort();
+				//		for (int i = 0, arrayLength = array.Length; i < arrayLength; i++)
+				//		{
+				//			Console.Write("{0, 2}{1}", array[i], i == arrayLength - 1 ? "" : ", ");
+				//		}
+				//		Console.WriteLine();
+				//		int numI = array.Search(num, SearchOption.Binary);
+				//		if (numI == -1)
+				//		{
+				//			Console.WriteLine();
+				//		}
+				//		else {
+				//			string leftPadding = numI > 0 ? new string(' ', numI * 4 - 1) : "";
+				//			Console.WriteLine(leftPadding + (numI == 0 ? "/\\_" : "_/\\_"));
+				//		}
+				//	}
+				//}
+
+				#endregion Exercise 16
 
 				#region Test
 
 				if (exercise == "test")
 				{
-					int[, ,] matrix3d = new int[3, 2, 2] { { { 24, 954 }, { 353, 432 } }, { { 562, 455 }, { 104, 6 } }, { { 810, 675 }, { 0, 534 } } };
-					int[] biggest = matrix3d.Biggest();
-					Console.WriteLine("matrix3d's biggest value is [{0}] = {1}", biggest[0] + ", " + biggest[1] + ", " + biggest[2], matrix3d[biggest[0], biggest[1], biggest[2]]);
-
-					for (char ch = 'A'; ch <= 'z' ; ch++)
+					for (int c = 0; c < 5; c++)
 					{
-						Console.WriteLine("{0} - {1}", ch, (int)ch);
+						Console.Write("\n>");
+						int[] randA = RandomIntArray(13);
+						randA.Print(false, ", ");
+						Console.Write("\n]");
+						randA.Sort().Print(false, ", ");
+						Console.WriteLine();
 					}
-
 				}
 
 				#endregion Test
 			}
 		}
 
+		public static void PrintChars(int start = 65, int end = 600)
+		{
+			for (char ch = (char)start, w = (char)0, bW = (char)Console.BufferWidth; (int)ch < end; ch++, w = (char)Console.CursorLeft)
+			{
+				Console.Write("{0} [{1, -3}]{2}", ch, (int)ch, (w >= bW - 9) ? Environment.NewLine : "  ");
+			}
+			Console.WriteLine();
+		}
+		private static Random randomO = new Random(); //Need to use a single random object so the numbers don't repeat
+
+		public static int[] RandomIntArray(int length = 20, int minValue = -1, int maxValue = 1000)
+		{
+			int[] array = new int[length];
+			for (int i = array.Length - 1; i >= 0; i--)
+			{
+				array[i] = randomO.Next(minValue, maxValue);
+			}
+			return array;
+		}
+
 		public static int[,] Random2dMatrix(int x, int y = 0, int maxValue = 1000)
 		{
 			y = (y == 0) ? x : y;
 			int[,] array = new int[y, x];
-			Random randomO = new Random();
 			for (; y > 0; y--)
 			{
 				for (int currX = 0; currX < x; currX++)

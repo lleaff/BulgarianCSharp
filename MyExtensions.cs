@@ -7,7 +7,7 @@ namespace ExtensionMethods
 {
 	//for the Sort<T>() method
 	public enum SortOption { Selection, Ascending, Descending };
-
+	public enum SearchOption { Binary };
 	public static class MyExtensions
 	{
 		public static void Swap<T>(this T val1, T val2)
@@ -130,12 +130,12 @@ namespace ExtensionMethods
 			}
 			if (algorithm == SortOption.Selection)
 			{
-				for (int i = 0, j = 0, smallestValueIndex = 0; i < array.Count - 2; i++, j = i, smallestValueIndex = i)
+				for (int i = 0, j = 0, smallestValueIndex = 0; i < array.Count - 1; i++, j = i, smallestValueIndex = i)
 				{
 					T smallestValue = order == SortOption.Ascending ? array.Max() : array.Min();
 					for (; j < array.Count; j++)
 					{
-						if ((order == SortOption.Ascending && array[j].CompareTo(smallestValue) < 0) || (order == SortOption.Descending && array[j].CompareTo(smallestValue) > 0))
+						if ((order == SortOption.Ascending && array[j].CompareTo(smallestValue) <= 0) || (order == SortOption.Descending && array[j].CompareTo(smallestValue) >= 0))
 						{
 							smallestValue = array[j];
 							smallestValueIndex = j;
@@ -154,6 +154,47 @@ namespace ExtensionMethods
 		{
 			return (T[])((IList<T>)array).Sort(algorithm, order);
 		}
+
+		/// <summary>
+		/// Search for a value in an array of IComparable values, returns -1 if the value isn't foud.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="array"></param>
+		/// <param name="value">The value to search for.</param>
+		/// <param name="algorithm">The algorithm used for searching.</param>
+		/// <returns></returns>
+		//public static int Search<T>(this T[] array, T value, SearchOption algorithm = SearchOption.Binary) where T : IComparable //TODO
+		//{
+		//	int index = -1;
+		//	if (algorithm == SearchOption.Binary)
+		//	{
+		//		bool lC = false; //last check flag
+		//		for (int i = 0, subMin = 0, subMax = array.Length - 1; subMax != 1 && (!lC || subMin != array.Length - 2); )
+		//		{
+		//			i = ((subMax - subMin) / 2) + Math.Max(0, subMin);
+		//			if ( array[i].CompareTo(value) == 0)
+		//			{
+		//				index = i;
+		//				break;
+		//			}
+		//			else if (array[i].CompareTo(value) > 0)
+		//			{
+		//				subMax = i - 1;
+		//			}
+		//			else if (array[i].CompareTo(value) < 0)
+		//			{
+		//				subMin = i;
+		//			}
+		//			if ()
+		//		}
+		//		return index;
+		//	}
+		//	else
+		//	{
+		//		Console.WriteLine("ERROR: wrong algorithm");
+		//		return -1;
+		//	}
+		//}
 
 		public static bool IsEqualTo<T>(this IList<T> array1, IList<T> array2)
 		{
