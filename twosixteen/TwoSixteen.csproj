@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{10EC911C-6EEE-4EE0-922E-8DE0EAEB81FC}</ProjectGuid>
+    <ProjectGuid>{22074751-D267-4427-85B6-E5C61883D2A3}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>twosixteen</RootNamespace>
-    <AssemblyName>twosixteen</AssemblyName>
+    <RootNamespace>TwoSixteen</RootNamespace>
+    <AssemblyName>TwoSixteen</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
