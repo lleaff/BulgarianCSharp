@@ -9,6 +9,7 @@ db
 
 VimScratchpad.cs
 
+*.exe
 bin/*
 obj/*
 */bin/*
